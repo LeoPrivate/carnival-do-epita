@@ -31,11 +31,8 @@ class LeoprivatePlayer extends Player
         return $this->result->getLastScoreFor($this->mySide);
 }
 
-    private function shouldICounter() {
-        return $this->getMyLastScore() == 3;
-    }
     private function shouldIReverse() {
-        return $this->getMyLastScore() == 0;
+        return ($this->getMyLastScore() == 3) || ($this->getMyLastScore() == 0);
     }
 
     private function shouldIChangeMySign() {
@@ -60,16 +57,6 @@ class LeoprivatePlayer extends Player
             return parent::rockChoice();
         } else {
             return parent::paperChoice();
-        }
-    }
-    private function chooseCounter() {
-        $sign = $this->getLastChoice();
-        if ($sign == 'rock') {
-            return parent::paperChoice();
-        } else if ($sign == 'paper') {
-            return parent::scissorsChoice();
-        } else {
-            return parent::rockChoice();
         }
     }
     private function changeMySign() {
@@ -117,8 +104,8 @@ class LeoprivatePlayer extends Player
         if (!$this->getLastChoice()) {
             return parent::paperChoice();
         }
-        if ($this->shouldICounter()) {
-            return $this->chooseCounter();
+        if ($this->shouldIReverse()) {
+            return $this->chooseOneReverse();
         }
         return $this->chooseOne();
        /* if ($this->shouldIChangeMySign()) {
