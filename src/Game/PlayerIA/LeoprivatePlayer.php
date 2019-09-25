@@ -11,7 +11,7 @@ use Hackathon\Game\Result;
  * @author Robin
  *
  */
-class LeoPrivatePlayer extends Player
+class LeoprivatePlayer extends Player
 {
     protected $mySide;
     protected $opponentSide;
