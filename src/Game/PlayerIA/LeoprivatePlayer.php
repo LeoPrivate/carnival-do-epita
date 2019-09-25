@@ -32,7 +32,7 @@ class LeoprivatePlayer extends Player
 }
 
     private function shouldIReverse() {
-        return $this->getMyLastScore() == 3;
+        return ($this->getMyLastScore() == 3) || ($this->getMyLastScore() == 0);
     }
 
     private function shouldIChangeMySign() {
