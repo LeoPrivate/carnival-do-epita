@@ -32,7 +32,7 @@ class LeoprivatePlayer extends Player
 }
 
     private function shouldIReverse() {
-        return ($this->getMyLastScore() == 3) || ($this->getMyLastScore() == 0);
+        return $this->getMyLastScore() == 3;
     }
 
     private function shouldIChangeMySign() {
@@ -76,43 +76,22 @@ class LeoprivatePlayer extends Player
 
     public function getChoice()
     {
-
-        // -------------------------------------    -----------------------------------------------------
-        // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
-        // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get my Last Score            ?    $this->result->getLastScoreFor($this->mySide) -- if 0 (first round)
-        // How to get the opponent Last Score  ?    $this->result->getLastScoreFor($this->opponentSide) -- if 0 (first round)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get all the Choices          ?    $this->result->getChoicesFor($this->mySide)
-        // How to get the opponent Last Choice ?    $this->result->getChoicesFor($this->opponentSide)
-        // -------------------------------------    -----------------------------------------------------
-       // How to get my Last Score            ?    $this->result->getLastScoreFor($this->mySide)
-        // How to get the opponent Last Score  ?    $this->result->getLastScoreFor($this->opponentSide)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get the stats                ?    $this->result->getStats()
-        // How to get the stats for me         ?    $this->result->getStatsFor($this->mySide)
-        //          array('name' => value, 'score' => value, 'friend' => value, 'foe' => value
-        // How to get the stats for the oppo   ?    $this->result->getStatsFor($this->opponentSide)
-        //          array('name' => value, 'score' => value, 'friend' => value, 'foe' => value
-        // -------------------------------------    -----------------------------------------------------
-        // How to get the number of round      ?    $this->result->getNbRound()
-        // -------------------------------------    -----------------------------------------------------
-        // How can i display the result of each round ? $this->prettyDisplay()
-        // -------------------------------------    -----------------------------------------------------
-
+        // COMMENT MARCHE MON RESEAU DE NEURONE ?
+        /*
+         * 1. Papier
+         * 2. si je gagne, je prend le counter du mon counter
+         * 3. sinon je prend le prochain dans ma liste
+         * J'avoue, j'ai testé plusieurs stratégie et celle ci fait environ TOP 8 donc
+         * rapport qualité/effort c'est plutôt correct :-)
+         * Désolé pour toute les fonctions qui ne servent pas, c'était pour mes autres tests
+         */
         if (!$this->getLastChoice()) {
             return parent::paperChoice();
         }
         if ($this->shouldIReverse()) {
             return $this->chooseOneReverse();
         }
-        return $this->chooseOne();
-       /* if ($this->shouldIChangeMySign()) {
-            return $this->changeMySign();
-        } else {
-            return $this->chooseOne();
-        }*/
+        return $this->changeMySign();
 
   }
 };
