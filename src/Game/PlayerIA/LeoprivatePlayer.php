@@ -11,7 +11,7 @@ use Hackathon\Game\Result;
  * @author Robin
  *
  */
-class LeoPrivatePlayer extends Player
+class LeoprivatePlayer extends Player
 {
     protected $mySide;
     protected $opponentSide;
@@ -29,6 +29,10 @@ class LeoPrivatePlayer extends Player
 
     private function getMyLastScore() {
         return $this->result->getLastScoreFor($this->mySide);
+}
+
+    private function shouldIReverse() {
+        return $this->getMyLastScore() == 3;
     }
 
     private function shouldIChangeMySign() {
@@ -43,6 +47,16 @@ class LeoPrivatePlayer extends Player
             return parent::paperChoice();
         } else {
             return parent::scissorsChoice();
+        }
+    }
+    private function chooseOneReverse() {
+        $sign = $this->getLastChoice();
+        if ($sign == 'rock') {
+            return parent::scissorsChoice();
+        } else if ($sign == 'paper') {
+            return parent::rockChoice();
+        } else {
+            return parent::paperChoice();
         }
     }
     private function changeMySign() {
@@ -89,6 +103,9 @@ class LeoPrivatePlayer extends Player
 
         if (!$this->getLastChoice()) {
             return parent::paperChoice();
+        }
+        if ($this->shouldIReverse()) {
+            return $this->chooseOneReverse();
         }
         if ($this->shouldIChangeMySign()) {
             return $this->changeMySign();
