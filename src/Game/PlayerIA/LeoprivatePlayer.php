@@ -1,6 +1,8 @@
 <?php
 
 namespace Hackathon\PlayerIA;
+
+use Hackathon\PlayerIA\Player;
 use Hackathon\Game\Result;
 
 /**
@@ -9,14 +11,58 @@ use Hackathon\Game\Result;
  * @author Robin
  *
  */
-class LeoPrivate extends Player
+class LeoprivatePlayer extends Player
 {
     protected $mySide;
     protected $opponentSide;
     protected $result;
 
+    protected $sign = array(0 => 'paper', 1 => 'rock', 2 => 'scissors');
+
+    private function getLastChoice() {
+        return $this->result->getLastChoiceFor($this->mySide);
+    }
+
+    private function getLastOpponentChoice() {
+        return $this->result->getLastChoiceFor($this->opponentSide);
+    }
+
+    private function getMyLastScore() {
+        return $this->result->getLastScoreFor($this->mySide);
+    }
+
+    private function shouldIChangeMySign() {
+        return $this->getMyLastScore() < 3;
+    }
+
+    private function chooseOne() {
+        $sign = $this->getLastChoice();
+        if ($sign == 'rock') {
+            return parent::rockChoice();
+        } else if ($sign == 'paper') {
+            return parent::paperChoice();
+        } else {
+            return parent::scissorsChoice();
+        }
+    }
+    private function changeMySign() {
+        $IndexNewSign = array_search($this->getMyLastScore(), $this->sign);
+        $sign = $this->sign[($IndexNewSign + 1) % 3 ];
+        if ($sign == 'rock') {
+            return parent::rockChoice();
+        } else if ($sign == 'paper') {
+            return parent::paperChoice();
+        } else {
+            return parent::scissorsChoice();
+        }
+}
+
+
+
+
     public function getChoice()
     {
+
         // -------------------------------------    -----------------------------------------------------
         // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
         // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
@@ -40,7 +86,15 @@ class LeoPrivate extends Player
         // -------------------------------------    -----------------------------------------------------
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
-        
-        return parent::paperChoice();            
+
+        if (!$this->getLastChoice()) {
+            return parent::paperChoice();
+        }
+        if ($this->shouldIChangeMySign()) {
+            return $this->changeMySign();
+        } else {
+            return $this->chooseOne();
+        }
+
   }
 };
