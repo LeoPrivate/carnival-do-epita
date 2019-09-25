@@ -81,7 +81,7 @@ class LeoprivatePlayer extends Player
           * 1. Papier
           * 2. si je gagne, je prend le counter du mon counter
           * 3. sinon je prend le prochain dans ma liste
-          * J'avoue, j'ai testé plusieurs stratégie et celle ci fait environ TOP 8 donc
+          * J'avoue, j'ai testé plusieurs stratégie et celle ci fait environ TOP 8 donc (enfin parfois)
           * rapport qualité/effort c'est plutôt correct :-)
           * et oui, y'a un else dans lequel on ne rentre jamais !
           */
