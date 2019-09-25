@@ -78,20 +78,24 @@ class LeoprivatePlayer extends Player
     {
         // COMMENT MARCHE MON RESEAU DE NEURONE ?
         /*
-         * 1. Papier
-         * 2. si je gagne, je prend le counter du mon counter
-         * 3. sinon je prend le prochain dans ma liste
-         * J'avoue, j'ai testé plusieurs stratégie et celle ci fait environ TOP 8 donc
-         * rapport qualité/effort c'est plutôt correct :-)
-         * Désolé pour toute les fonctions qui ne servent pas, c'était pour mes autres tests
-         */
+          * 1. Papier
+          * 2. si je gagne, je prend le counter du mon counter
+          * 3. sinon je prend le prochain dans ma liste
+          * J'avoue, j'ai testé plusieurs stratégie et celle ci fait environ TOP 8 donc
+          * rapport qualité/effort c'est plutôt correct :-)
+          * et oui, y'a un else dans lequel on ne rentre jamais !
+          */
         if (!$this->getLastChoice()) {
             return parent::paperChoice();
         }
         if ($this->shouldIReverse()) {
             return $this->chooseOneReverse();
         }
-        return $this->changeMySign();
+        if ($this->shouldIChangeMySign()) {
+            return $this->changeMySign();
+        } else {
+            return $this->chooseOne();
+        }
 
   }
 };
